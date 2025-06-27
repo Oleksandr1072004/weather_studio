@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Studio</title>
+</head>
+<body>
+    <h1>Weather on your city</h1>
+    <div class="search-container">
+        <form action="{% url 'weather_app:detail' %}" method="get" role="form">
+          <input type="text" placeholder="Search the city..." name="search">
+          <button type="submit" >Get info</button>
+        </form>
+    </div>
+</body>
+</html>

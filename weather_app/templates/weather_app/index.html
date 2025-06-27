@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <title>Weather Studio</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="{% static 'images/logo_620x480-removebg-preview.png' %}" width="130px"/>
+        </nav>
+    </header>
+    <h1>Weather on your city</h1>
+    <div class="form-container">
+        <form action="{% url 'weather_app:detail' %}" method="get" role="form">
+          <input type="text" placeholder="Search the city..." name="search">
+          <button type="submit" >Get info</button>
+        </form>
+    </div>
+</body>
+</html>

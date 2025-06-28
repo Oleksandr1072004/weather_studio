@@ -28,7 +28,7 @@ h1{
     background-color: rgb(16, 42, 94);
     color: rgb(243, 248, 255);
     padding: 10px 25px;
-    border: none;
+    border: 1px rgb(16, 42, 94) solid;
     border-radius: 30px;
     font-size: 16px;
     font-weight: 600;
@@ -42,4 +42,5 @@ h1{
 .btn:hover {
     background-color: rgb(199, 220, 250);
     color: rgb(86, 153, 240);
+    border: 1px rgb(86, 153, 240) solid;
 }

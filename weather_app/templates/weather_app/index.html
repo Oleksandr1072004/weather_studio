@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
     <title>Weather Studio</title>
 </head>
 <body>
@@ -12,12 +17,14 @@
             <img src="{% static 'images/logo_620x480-removebg-preview.png' %}" width="130px"/>
         </nav>
     </header>
-    <h1>Weather on your city</h1>
-    <div class="form-container">
-        <form action="{% url 'weather_app:detail' %}" method="get" role="form">
-          <input type="text" placeholder="Search the city..." name="search">
-          <button type="submit" >Get info</button>
-        </form>
+    <div class="container">
+        <h1>Weather on your city</h1>
+        <div class="form-container">
+            <form action="{% url 'weather_app:detail' %}" method="get" role="form">
+              <input type="text" placeholder="Search the city..." name="search" required minlength="2">
+              <button type="submit" >Get info</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

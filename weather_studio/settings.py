@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,8 +28,7 @@ SECRET_KEY = 'django-insecure-ec$!@87-$5qfz0mchl-s34ut_mj*&iaqk65a^5rg1bq(v*mwyg
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
+OPENWEATHER_API_KEY = config('OPENWEATHER_API_KEY', default='')
 # Application definition
 
 INSTALLED_APPS = [

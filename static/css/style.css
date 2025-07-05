@@ -3,9 +3,12 @@
 }
 body {
     background-color: rgb(185, 220, 248);
+    --bs-body-font-family: var(--bs-font-monospace);
+    --bs-body-line-height: 1.4;
 }
 header {
     background-color: rgb(165, 210, 248);
+    padding: 10px;
 }
 h1{
     text-align: center;
@@ -24,7 +27,7 @@ h1{
     padding: 10px;
 }
 
-.btn {
+.btn_blue {
     background-color: rgb(16, 42, 94);
     color: rgb(243, 248, 255);
     padding: 10px 25px;
@@ -39,8 +42,98 @@ h1{
     text-align: center;
 }
 
-.btn:hover {
+.btn_blue:hover {
     background-color: rgb(199, 220, 250);
     color: rgb(86, 153, 240);
     border: 1px rgb(86, 153, 240) solid;
+    text-decoration: none;
+}
+
+.btn_small {
+    background-color: rgb(16, 42, 94);
+    color: rgb(243, 248, 255);
+    padding: 10px 25px;
+    border: 1px rgb(16, 42, 94) solid;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn_small:hover {
+    background-color: rgb(199, 220, 250);
+    color: rgb(86, 153, 240);
+    border: 1px rgb(86, 153, 240) solid;
+    text-decoration: none;
+}
+
+.btn__outer__container {
+    margin-top: 10px;
+    background-color: rgb(179, 200, 230);
+    display: flex;
+    padding: 10px 0;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn__inner_container {
+    display: inline-flex;
+    padding: 10px 0;
+    gap: 10px;
+}
+
+.dflex{
+    display: flex;
+    align-items: left;
+    justify-content: left;
+}
+.text{
+    font-weight: 600;
+    color:rgb(86, 153, 240);
+    font-size:24px;
+    width:4%;
+    height:12px;
+}
+.switch-div{
+    width:8%;
+}
+.switch{
+    width:100%;
+}
+.switch input[type=checkbox]{
+    height:0;
+    width:0;
+    visibility: hidden;
+}
+.switch label{
+    cursor: pointer;
+    text-indent: -99999px;
+    width:110px;
+    height:47px;
+    background-color: gray;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+}
+.switch input:checked+label{
+    background-color: rgb(199, 220, 250);
+}
+.switch input:checked+label:after{
+    left:calc(100% - 5px);
+    transform: translateX(-100%);
+}
+.switch label:after{
+    content: '';
+    position: absolute;
+    top:3px;
+    left:5px;
+    width:40px;
+    height:40px;
+    background-color: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
 }

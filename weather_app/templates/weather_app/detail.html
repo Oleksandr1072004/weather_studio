@@ -4,7 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <title>Info for your city</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <title>Info for your city - Weather Studio</title>
 </head>
 <body>
     <header>
@@ -12,6 +18,7 @@
             <img src="{% static 'images/logo_620x480-removebg-preview.png' %}" width="130px"/>
         </nav>
     </header>
+    <div class="container-fluid">
     <div style="position: relative;">
         <p>Your city/country:</p>
         <p id="weather_info">
@@ -27,6 +34,36 @@
             Weather description: {{ weather_desc }}
         </p>
     </div>
-    <a href="{% url 'weather_app:index' %}" class="btn">Go back</a>
+    <a href="{% url 'weather_app:index' %}" class="btn_blue">Go back</a>
+    </div>
+    <div class="btn__outer__container">
+        <div class="container-fluid">
+            <span>Current degree version:</span>
+<!--            <div class="btn__inner__container">-->
+<!--                <a href="{% url 'weather_app:detail_celcius' %}" class="btn_small">C</a>-->
+<!--                <a href="{% url 'weather_app:detail_farenheit' %}" class="btn_small">F</a>-->
+<!--            </div>-->
+            <div>
+                <div class="switch">
+                    <div class="dflex">
+                        <div class="text">F</div>
+                        <div class="switch-div">
+                            <input type="checkbox" id="switch" value="degree" name="degree_field" data-item-id="{{ item.id }}" onchange="sendCheckboxState()">
+                            <label for="switch">Toggle</label>
+                        </div>
+                        <div class="text">C</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('switch').addEventListener('change', function() {
+            const isChecked = this.checked;
+            // Construct the URL based on the checkbox state
+            const url = isChecked ? "{% url 'weather_app:detail_celcius' %}" : "{% url 'weather_app:detail_farenheit' %}";
+            window.location.href = url; // Redirect to the URL
+        });
+    </script>
 </body>
 </html>

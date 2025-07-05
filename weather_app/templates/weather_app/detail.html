@@ -48,7 +48,7 @@
                     <div class="dflex">
                         <div class="text">F</div>
                         <div class="switch-div">
-                            <input type="checkbox" id="switch" value="degree" name="degree_field" data-item-id="{{ item.id }}" onchange="sendCheckboxState()">
+                            <input type="checkbox" id="switch" value="degree" name="degree_field" data-item-id="{{ item.id }}">
                             <label for="switch">Toggle</label>
                         </div>
                         <div class="text">C</div>
@@ -61,7 +61,14 @@
         document.getElementById('switch').addEventListener('change', function() {
             const isChecked = this.checked;
             // Construct the URL based on the checkbox state
-            const url = isChecked ? "{% url 'weather_app:detail_celcius' %}" : "{% url 'weather_app:detail_farenheit' %}";
+            const url = "";
+            console.log("Is checked: " + isChecked);
+            if (isChecked === true) {
+                url = "{% url 'weather_app:detail_celcius' %}";
+            }
+            else {
+                url = "{% url 'weather_app:detail_farenheit' %}";
+            }
             window.location.href = url; // Redirect to the URL
         });
     </script>

@@ -39,10 +39,6 @@
     <div class="btn__outer__container">
         <div class="container-fluid">
             <span>Current degree version:</span>
-<!--            <div class="btn__inner__container">-->
-<!--                <a href="{% url 'weather_app:detail_celcius' %}" class="btn_small">C</a>-->
-<!--                <a href="{% url 'weather_app:detail_farenheit' %}" class="btn_small">F</a>-->
-<!--            </div>-->
             <div>
                 <div class="switch">
                     <div class="dflex">
@@ -59,17 +55,16 @@
     </div>
     <script>
         document.getElementById('switch').addEventListener('change', function() {
-            const isChecked = this.checked;
-            // Construct the URL based on the checkbox state
-            const url = "";
-            console.log("Is checked: " + isChecked);
-            if (isChecked === true) {
-                url = "{% url 'weather_app:detail_celcius' %}";
-            }
-            else {
-                url = "{% url 'weather_app:detail_farenheit' %}";
-            }
-            window.location.href = url; // Redirect to the URL
+            const unit = this.checked ? 'c' : 'f';
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('unit', unit);
+            window.location.href = currentUrl.toString();
+        });
+
+        // Set initial state of the switch based on current unit
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUnit = "{{ current_unit|default:'k' }}";
+            document.getElementById('switch').checked = currentUnit === 'c';
         });
     </script>
 </body>

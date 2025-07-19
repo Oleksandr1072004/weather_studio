@@ -26,7 +26,6 @@ def convert_calvin_to_farenheit(degree):
 
 
 def get_city(request):
-    global city_name
     query_dict = request.GET
     query = query_dict.get("search")
 
@@ -38,7 +37,7 @@ def get_city(request):
     try:
         full_info = f"http://api.openweathermap.org/data/2.5/weather?q={query.strip()}&appid={api_key}"
         r = requests.get(full_info)
-        r.raise_for_status()  # Raise exception for HTTP errors
+        r.raise_for_status()
         data = r.json()
 
         if data.get('cod') != 200:
@@ -46,21 +45,41 @@ def get_city(request):
                 'error': data.get('message', 'Unknown error from weather API')
             })
 
+        # Get unit from GET parameter or default to Kelvin
+        unit = request.GET.get('unit', 'k')
+
+        if unit == 'c':
+            temp = convert_calvin_to_celcius(data["main"]["temp"])
+            feels_like = convert_calvin_to_celcius(data["main"]["feels_like"])
+            temp_min = convert_calvin_to_celcius(data["main"]["temp_min"])
+            temp_max = convert_calvin_to_celcius(data["main"]["temp_max"])
+        elif unit == 'f':
+            temp = convert_calvin_to_farenheit(data["main"]["temp"])
+            feels_like = convert_calvin_to_farenheit(
+                data["main"]["feels_like"])
+            temp_min = convert_calvin_to_farenheit(data["main"]["temp_min"])
+            temp_max = convert_calvin_to_farenheit(data["main"]["temp_max"])
+        else:
+            temp = data["main"]["temp"]
+            feels_like = data["main"]["feels_like"]
+            temp_min = data["main"]["temp_min"]
+            temp_max = data["main"]["temp_max"]
+
         context = {
             'city_name': data["name"],
             'country': data["sys"]["country"],
             'current_time': datetime.datetime.now().strftime(
                 "%d.%m.%Y %H:%M:%S"),
-            'temp': "{0:.2f}".format(data["main"]["temp"]),
-            'feels_like': "{0:.2f}".format(data["main"]["feels_like"]),
-            'temp_min': "{0:.2f}".format(data["main"]["temp_min"]),
-            'temp_max': "{0:.2f}".format(data["main"]["temp_max"]),
+            'temp': "{0:.2f}".format(temp),
+            'feels_like': "{0:.2f}".format(feels_like),
+            'temp_min': "{0:.2f}".format(temp_min),
+            'temp_max': "{0:.2f}".format(temp_max),
             'humidity': data["main"]["humidity"],
             'wind_speed': data["wind"]["speed"],
             'weather_desc': data["weather"][0]["main"],
+            'current_unit': unit,
         }
-        city_name = data["name"]
-        print("City name:", city_name)
+
         return render(request, "weather_app/detail.html", context)
 
     except requests.exceptions.RequestException as e:
@@ -71,59 +90,3 @@ def get_city(request):
         return render(request, "weather_app/error.html", {
             'error': 'Invalid data received from weather service'
         })
-
-
-def get_city_celcius(request):
-    global city_name
-    full_info = f"http://api.openweathermap.org/data/2.5/weather?q={city_name.strip()}&appid={api_key}"
-    r = requests.get(full_info)
-    r.raise_for_status()  # Raise exception for HTTP errors
-    data = r.json()
-    context = {
-        'city_name': data["name"],
-        'country': data["sys"]["country"],
-        'current_time': datetime.datetime.now().strftime(
-            "%d.%m.%Y %H:%M:%S"),
-        'temp': "{0:.2f}".format(convert_calvin_to_celcius(data["main"]["temp"])),
-        'feels_like': "{0:.2f}".format(
-            convert_calvin_to_celcius(data["main"]["feels_like"])),
-        'temp_min': "{0:.2f}".format(
-            convert_calvin_to_celcius(data["main"]["temp_min"])),
-        'temp_max': "{0:.2f}".format(
-            convert_calvin_to_celcius(data["main"]["temp_max"])),
-        'humidity': data["main"]["humidity"],
-        'wind_speed': data["wind"]["speed"],
-        'weather_desc': data["weather"][0]["main"],
-    }
-
-    return render(request, "weather_app/detail.html", context)
-
-
-def get_city_farenheit(request):
-    global city_name
-    full_info = f"http://api.openweathermap.org/data/2.5/weather?q={city_name.strip()}&appid={api_key}"
-    r = requests.get(full_info)
-    r.raise_for_status()  # Raise exception for HTTP errors
-    data = r.json()
-
-    if data.get('cod') != 200:
-        return render(request, "weather_app/error.html", {
-            'error': data.get('message', 'Unknown error from weather API')
-        })
-
-    context = {
-        'city_name': data["name"],
-        'country': data["sys"]["country"],
-        'current_time': datetime.datetime.now().strftime(
-            "%d.%m.%Y %H:%M:%S"),
-        'temp': "{0:.2f}".format(convert_calvin_to_farenheit(data["main"]["temp"])),
-        'feels_like': "{0:.2f}".format(
-            convert_calvin_to_farenheit(data["main"]["feels_like"])),
-        'temp_min': "{0:.2f}".format(convert_calvin_to_farenheit(data["main"]["temp_min"])),
-        'temp_max': "{0:.2f}".format(convert_calvin_to_farenheit(data["main"]["temp_max"])),
-        'humidity': data["main"]["humidity"],
-        'wind_speed': data["wind"]["speed"],
-        'weather_desc': data["weather"][0]["main"],
-    }
-
-    return render(request, "weather_app/detail.html", context)
